@@ -1,0 +1,6 @@
+name,description,price,price_type,is_active,id,created_date,updated_date,created_by_id,created_by,is_sample
+"Lit bébé","Lit parapluie","0","fixed","true","6957a2cc64ba9b29f21f491b","2026-01-02T10:49:48.283000","2026-01-02T15:30:40.807000","6957a0942dcbccc9ddde036c","tsurunnuage@gmail.com","false"
+"Chauffage","Supplément chauffage en période hivernale","35","per_night","true","6957a2cc64ba9b29f21f491a","2026-01-02T10:49:48.283000","2026-01-05T08:59:18.386000","6957a0942dcbccc9ddde036c","tsurunnuage@gmail.com","false"
+"Ménage supplémentaire à 7 jours","Ménage intermédiaire durant les longs séjours (obligatoire)","75","fixed","true","6957a2cc64ba9b29f21f4919","2026-01-02T10:49:48.283000","2026-01-03T12:00:47.308000","6957a0942dcbccc9ddde036c","tsurunnuage@gmail.com","false"
+"Location de draps de lit","Draps du dessous - House de couette - Taie d'oreiller","12","per_person","true","6957a2cc64ba9b29f21f4918","2026-01-02T10:49:48.283000","2026-01-03T12:00:00.631000","6957a0942dcbccc9ddde036c","tsurunnuage@gmail.com","false"
+"Chaise haute","Chaise haute pour bébé","0","fixed","true","6957a2cc64ba9b29f21f491c","2026-01-02T10:49:48.283000","2026-01-02T15:30:48.465000","6957a0942dcbccc9ddde036c","tsurunnuage@gmail.com","false"

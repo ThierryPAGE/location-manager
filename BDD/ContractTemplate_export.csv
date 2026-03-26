@@ -1,0 +1,163 @@
+name,content,is_default,id,created_date,updated_date,created_by_id,created_by,is_sample
+"Contrat Location {{GUEST_FIRST_NAME}} {{GUEST_LAST_NAME}} - {{CHECK_IN}} - {{CHECK_OUT}}","CONTRAT DE LOCATION SAISONNIÈRE
+
+Entre les soussignés :
+Le Bailleur :
+Mme PINAULT Géraldine et Mr Page Thierry,
+Domiciliée au 156 rue Oberkampf, 75011 PARIS,
+Ci-après dénommée ""le Bailleur"".
+Et le Preneur :
+{{GUEST_FIRST_NAME}} {{GUEST_LAST_NAME}}
+Domiciliée : {{GUEST_ADDRESS}}
+Ci-après dénommé ""le Preneur"".
+
+Il a été convenu ce qui suit :
+
+1. OBJET DU CONTRAT
+Le Bailleur loue au Preneur, à titre de location saisonnière, la maison située au **130 rue de la joie, 17190 Saint-Georges-d'Oléron**.
+
+Description du bien :
+Maison principale
+- 1 Salon
+- 1 Salle à manger
+- 1 Cuisine équipée
+- 3 Chambres
+- 2 Salles d’eau
+- Un jardin privatif
+
+Annexe
+- 1 Petit salon
+- 2 Chambres
+- 1 Salles d’eau
+
+2. DURÉE DE LA LOCATION
+La présente location est consentie pour une durée de {{NUM_NIGHTS}} nuits, à compter du ** {{CHECK_IN}} à 14h00 ** jusqu’au ** {{CHECK_OUT}} à 11h00 **.
+
+3. MONTANT DU LOYER ET DES CHARGES
+- Loyer total : {{SUBTOTAL_NIGHTS}} € pour la durée de la location.
+- Forfait ménage obligatoire : {{CLEANING_FEE}} € 
+- Taxe de séjour : {{TOURIST_TAX}} €
+- Options : {{OPTIONS_TOTAL}} €
+
+Le montant total à payer par le Preneur s’élève donc à {{TOTAL_AMOUNT}} €.
+Arrhes à verser lors de la signature du présent contrat 30 % : {{ARRHES_AMOUNT}} €.
+
+4. CONDITIONS DE PAIEMENT
+Le montant total devra être versé au plus tard 15 jours avant le début de la location par virement bancaire ou tout autre moyen convenu entre les parties.
+Solde à régler : {{TOTAL_AMOUNT}} – {{ARRHES_AMOUNT}} = {{SOLDE_AMOUNT}} € 
+
+5. DÉPÔT DE GARANTIE
+Un chèque de dépôt de garantie de {{DEPOSIT_AMOUNT}} € sera exigé lors de la remise des clefs et restitué au Preneur dans un délai maximum de 7 jours après la fin de la location, sous réserve d’état des lieux conforme.
+
+6. ÉTAT DES LIEUX
+Un état des lieux d’entrée et de sortie sera réalisé entre les parties par la Conciergerie Laura Gragan. Cet état des lieux conditionne la restitution du dépôt de garantie.
+
+7. OBLIGATIONS DU PRENEUR
+Le Preneur s’engage :
+- à occuper les lieux paisiblement et à respecter le voisinage ;
+- à restituer les lieux dans l’état initial (hors forfait ménage) ;
+- à ne pas sous-louer le bien ;
+- à signaler toute dégradation ou dysfonctionnement.
+
+8. ANNULATION
+En cas d’annulation par le Preneur moins de 15 jours avant le début de la location, le loyer restera acquis au Bailleur. Le forfait ménage et le dépôt de garantie seront remboursés.
+
+9. ASSURANCE
+Le Preneur déclare être couvert par une assurance responsabilité civile pour toute la durée de la location.
+
+10. SIGNATURES
+En signant le présent contrat, les parties reconnaissent avoir pris connaissance et accepté l’ensemble des clauses.
+
+11. RIB 
+M PAGE THIERRY OU MLE PINAULT GERALDINE
+BICS GENERAL LECLERC (00061)- IBAN - FR76 1020 7000 6104 1610 7865 801
+RIB - 10207 00061 04161078658 01 - BIC - CCBP FRPP MTG
+
+Fait à Paris, le {{TODAY_DATE}}
+
+(Signature précédée de la mention ""Lu et approuvé"")
+Le Bailleur : 
+Lu et approuvé      					             
+ <img src=""https://base44.app/api/apps/6957a0942dcbccc9ddde036b/files/public/6957a0942dcbccc9ddde036b/973fbd2f9_Sign_GP_TP_h.png"" width=""200"" />
+
+Le Preneur :
+ 
+ 
+ 
+ 
+","true","695bdce6f4bede5b0ba49331","2026-01-05T15:46:46.812000","2026-01-05T16:36:36.075000","6957a0942dcbccc9ddde036c","tsurunnuage@gmail.com","false"
+"Contrat standard","CONTRAT DE LOCATION SAISONNIÈRE
+
+Entre les soussignés :
+
+Le Bailleur :
+[Vos coordonnées]
+Domicilié(e) au [Votre adresse]
+Ci-après dénommé(e) ""le Bailleur"".
+
+Et le Preneur :
+{{GUEST_FIRST_NAME}} {{GUEST_LAST_NAME}}
+Domicilié(e) au {{GUEST_ADDRESS}}
+Email : {{GUEST_EMAIL}}
+Téléphone : {{GUEST_PHONE}}
+Ci-après dénommé ""le Preneur"".
+
+Il a été convenu ce qui suit :
+
+1. OBJET DU CONTRAT
+Le Bailleur loue au Preneur, à titre de location saisonnière, le bien situé au {{PROPERTY_ADDRESS}}.
+
+Description du bien :
+{{PROPERTY_NAME}}
+- Capacité d'accueil : {{PROPERTY_CAPACITY}} personnes
+- Nombre de chambres : {{PROPERTY_BEDROOMS}}
+- Équipements : [à détailler selon le bien]
+
+2. DURÉE DE LA LOCATION
+La présente location est consentie pour une durée de {{NUM_NIGHTS}} nuit(s), à compter du {{CHECK_IN}} à 14h00 jusqu'au {{CHECK_OUT}} à 11h00.
+
+Nombre de personnes prévues : {{NUM_GUESTS}}
+
+3. MONTANT DU LOYER ET DES CHARGES
+- Loyer total : {{SUBTOTAL_NIGHTS}} € pour la durée de la location
+- Forfait ménage obligatoire : {{CLEANING_FEE}} €
+- Taxe de séjour : {{TOURIST_TAX}} €
+- Options : {{OPTIONS_TOTAL}} €
+
+Le montant total à payer par le Preneur s'élève donc à {{TOTAL_AMOUNT}} €.
+
+Arrhes à verser lors de la signature du présent contrat (30%) : [calculer 30% du total] €.
+
+4. CONDITIONS DE PAIEMENT
+Le montant total devra être versé au plus tard 15 jours avant le début de la location par virement bancaire ou tout autre moyen convenu entre les parties.
+
+Solde à régler avant le [date - 15 jours avant arrivée] : [montant total - arrhes] €
+
+5. DÉPÔT DE GARANTIE
+Un chèque de dépôt de garantie de {{DEPOSIT_AMOUNT}} € sera exigé lors de la remise des clefs et restitué au Preneur dans un délai maximum de 7 jours après la fin de la location, sous réserve d'état des lieux conforme.
+
+6. ÉTAT DES LIEUX
+Un état des lieux d'entrée et de sortie sera réalisé entre les parties. Cet état des lieux conditionne la restitution du dépôt de garantie.
+
+7. OBLIGATIONS DU PRENEUR
+Le Preneur s'engage :
+- à occuper les lieux paisiblement et à respecter le voisinage ;
+- à restituer les lieux dans l'état initial (hors forfait ménage) ;
+- à ne pas sous-louer le bien ;
+- à signaler toute dégradation ou dysfonctionnement.
+
+8. ANNULATION
+En cas d'annulation par le Preneur moins de 15 jours avant le début de la location, le loyer restera acquis au Bailleur. Le forfait ménage et le dépôt de garantie seront remboursés.
+
+9. ASSURANCE
+Le Preneur déclare être couvert par une assurance responsabilité civile pour toute la durée de la location.
+
+10. SIGNATURES
+En signant le présent contrat, les parties reconnaissent avoir pris connaissance et accepté l'ensemble des clauses.
+
+Fait à ________________, le {{TODAY_DATE}}
+
+(Signature précédée de la mention ""Lu et approuvé"")
+
+Le Bailleur :                                    Le Preneur :
+Lu et approuvé                                   Lu et approuvé","true","6957a2cc64ba9b29f21f491d","2026-01-02T10:49:48.285000","2026-01-02T14:39:31.707000","6957a0942dcbccc9ddde036c","tsurunnuage@gmail.com","false"

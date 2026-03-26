@@ -1,0 +1,3 @@
+name,address,description,capacity,bedrooms,base_price_per_night,cleaning_fee,tourist_tax_per_person,deposit_amount,images,is_active,id,created_date,updated_date,created_by_id,created_by,is_sample
+"Maison de famille Oléron","130 rue de la joie -  17190 Saint-Georges-d'Oléron
+","Plage de Foulerot - Maison de famille - 5 chambres","10","5","160","160","","800","[]","true","6957dbc3da59ae178e802023","2026-01-02T14:52:51.121000","2026-01-04T13:03:05.224000","6957a0942dcbccc9ddde036c","tsurunnuage@gmail.com","false"
