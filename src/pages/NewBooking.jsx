@@ -24,6 +24,10 @@ export default function NewBooking() {
     mutationFn: (data) => base44.entities.Booking.create(data),
     onSuccess: (data) => {
       navigate(createPageUrl(`BookingDetail?id=${data.id}`));
+    },
+    onError: (error) => {
+      console.error('Erreur création réservation:', error);
+      alert(`Erreur lors de la création : ${error.message}`);
     }
   });
 

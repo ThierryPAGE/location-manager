@@ -136,10 +136,9 @@ export default function BookingForm({ booking, properties, options, onSubmit, on
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const dataToSubmit = {
-      ...formData,
-      ...pricing
-    };
+    // eslint-disable-next-line no-unused-vars
+    const { manual_rental_amount, manual_tourist_tax, ...rest } = formData;
+    const dataToSubmit = { ...rest, ...pricing };
     onSubmit(dataToSubmit);
   };
 
