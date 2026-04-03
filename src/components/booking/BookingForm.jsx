@@ -139,6 +139,10 @@ export default function BookingForm({ booking, properties, options, onSubmit, on
     // eslint-disable-next-line no-unused-vars
     const { manual_rental_amount, manual_tourist_tax, ...rest } = formData;
     const dataToSubmit = { ...rest, ...pricing };
+    // Convertir les chaînes vides en null pour les colonnes numériques
+    Object.keys(dataToSubmit).forEach((key) => {
+      if (dataToSubmit[key] === "") dataToSubmit[key] = null;
+    });
     onSubmit(dataToSubmit);
   };
 
