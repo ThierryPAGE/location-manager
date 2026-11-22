@@ -32,8 +32,8 @@ export default function BookingForm({ booking, properties, options, onSubmit, on
     source_other: '',
     selected_options: [],
     notes: '',
-    manual_rental_amount: '',
-    manual_tourist_tax: '',
+    manual_rental_amount: booking?.subtotal_nights ?? '',
+    manual_tourist_tax: booking?.tourist_tax_total ?? '',
     concierge_fee: '',
     host_service_fee: '',
     ...booking
