@@ -146,36 +146,68 @@ export default function BookingDetail() {
   };
 
   const generateContractPDF = async (content) => {
-    const response = await base44.integrations.Core.InvokeLLM({
-      prompt: `Génère un contrat de location en HTML bien formaté à partir du contenu suivant. 
-      Utilise un style professionnel avec des marges réduites, une typographie claire et compacte.
-      IMPORTANT: Le contrat doit tenir sur maximum 2 pages A4.
-      - Utilise line-height: 1.3 pour réduire l'espacement entre les lignes
-      - Marges: 15mm sur tous les côtés
-      - Espacement minimal entre les sections (margin-bottom: 8px max)
-      - Taille de police: 11pt pour le corps du texte, 14pt pour les titres
-      - Pas de saut de page inutiles
-      Le HTML doit être prêt à être imprimé ou converti en PDF.
+    const { jsPDF } = await import('jspdf');
+    const html2canvas = (await import('html2canvas')).default;
 
-      Contenu du contrat:
-      ${content}`,
-      response_json_schema: {
-        type: "object",
-        properties: {
-          html_content: { type: "string" }
-        }
-      }
+    // Render the template content in a hidden off-screen div styled for A4 print
+    const container = document.createElement('div');
+    Object.assign(container.style, {
+      position: 'fixed',
+      top: '-9999px',
+      left: '-9999px',
+      width: '794px',       // A4 at 96 dpi
+      background: 'white',
+      padding: '50px 60px',
+      fontFamily: 'Arial, sans-serif',
+      fontSize: '11pt',
+      lineHeight: '1.4',
+      color: '#000',
+      boxSizing: 'border-box',
     });
 
-    const blob = new Blob([response.html_content], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `contrat-${booking.guest_last_name}-${booking.id.slice(0, 8)}.html`;
-    a.click();
-    URL.revokeObjectURL(url);
+    const isHtml = /<[a-z][\s\S]*>/i.test(content);
+    if (isHtml) {
+      container.innerHTML = content;
+    } else {
+      container.innerHTML = content
+        .split('\n')
+        .map(line => `<p style="margin:0 0 5px 0">${line || '&nbsp;'}</p>`)
+        .join('');
+    }
+    document.body.appendChild(container);
 
-    updateMutation.mutate({ 
+    try {
+      const canvas = await html2canvas(container, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff',
+      });
+
+      const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
+      const pageW = pdf.internal.pageSize.getWidth();
+      const pageH = pdf.internal.pageSize.getHeight();
+      const imgData = canvas.toDataURL('image/png');
+      const imgH = (canvas.height * pageW) / canvas.width;
+
+      let remaining = imgH;
+      let yOffset = 0;
+
+      while (remaining > 0) {
+        pdf.addImage(imgData, 'PNG', 0, yOffset, pageW, imgH);
+        remaining -= pageH;
+        if (remaining > 0) {
+          pdf.addPage();
+          yOffset -= pageH;
+        }
+      }
+
+      pdf.save(`contrat-${booking.guest_last_name}-${booking.id.slice(0, 8)}.pdf`);
+    } finally {
+      document.body.removeChild(container);
+    }
+
+    updateMutation.mutate({
       status: 'contract_sent',
       contract_date: new Date().toISOString().split('T')[0]
     });

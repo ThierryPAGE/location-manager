@@ -9,6 +9,7 @@ import { fr } from 'date-fns/locale';
 export default function ContractGenerator({ booking, property, templates, onGenerate }) {
   const [selectedTemplate, setSelectedTemplate] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generateError, setGenerateError] = useState(null);
 
   const replaceVariables = (content) => {
     if (!content || !booking || !property) return content;
@@ -54,14 +55,21 @@ export default function ContractGenerator({ booking, property, templates, onGene
 
   const handleGenerate = async () => {
     if (!selectedTemplate) return;
-    
+
     const template = templates.find(t => t.id === selectedTemplate);
     if (!template) return;
 
     setIsGenerating(true);
-    const processedContent = replaceVariables(template.content);
-    await onGenerate(processedContent);
-    setIsGenerating(false);
+    setGenerateError(null);
+    try {
+      const processedContent = replaceVariables(template.content);
+      await onGenerate(processedContent);
+    } catch (err) {
+      console.error('PDF generation error:', err);
+      setGenerateError('La génération du PDF a échoué. Veuillez réessayer.');
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -95,6 +103,12 @@ export default function ContractGenerator({ booking, property, templates, onGene
           <FileDown className="w-4 h-4 mr-2" />
           {isGenerating ? 'Génération en cours...' : 'Générer le contrat PDF'}
         </Button>
+
+        {generateError && (
+          <p className="text-sm text-rose-600 bg-rose-50 border border-rose-200 rounded-lg px-3 py-2">
+            {generateError}
+          </p>
+        )}
 
         <div className="text-xs text-slate-500 p-3 bg-slate-50 rounded-lg">
           <p className="font-medium mb-1">Variables disponibles :</p>
