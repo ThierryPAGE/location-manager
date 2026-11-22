@@ -19,7 +19,7 @@ const DEFAULT_TEMPLATE = `<html>
 <meta charset="utf-8"/>
 <style>
   body{font-family:Arial,sans-serif;font-size:11pt;line-height:1.45;color:#000;margin:0;padding:0}
-  .page{width:794px;padding:48px 60px;box-sizing:border-box;background:#fff}
+  .page{width:794px;padding:48px 70px 48px 60px;box-sizing:border-box;background:#fff}
   h1{font-size:14pt;text-align:center;text-transform:uppercase;letter-spacing:.05em;margin:0 0 18px}
   h2{font-size:11pt;text-transform:uppercase;margin:14px 0 4px;border-bottom:1px solid #000;padding-bottom:2px}
   p{margin:3px 0}
@@ -78,7 +78,7 @@ const DEFAULT_TEMPLATE = `<html>
 <p>Le montant total devra être versé au plus tard 15 jours avant le début de la location par virement bancaire ou tout autre moyen convenu entre les parties.</p>
 <p style="margin-top:4px"><strong>Solde à régler : {{TOTAL_AMOUNT}} – {{ARRHES_AMOUNT}} = {{SOLDE_AMOUNT}} €</strong></p>
 
-<h2>5. Dépôt de garantie</h2>
+<h2 style="page-break-before:always;padding-top:16px">5. Dépôt de garantie</h2>
 <p>Un chèque de dépôt de garantie de <strong>{{DEPOSIT_AMOUNT}} €</strong> sera exigé lors de la remise des clefs et restitué au Preneur dans un délai maximum de 7 jours après la fin de la location, sous réserve d'état des lieux conforme.</p>
 
 <h2>6. État des lieux</h2>
