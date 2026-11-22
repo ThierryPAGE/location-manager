@@ -11,53 +11,119 @@ import { Switch } from "@/components/ui/switch";
 import { Plus, Pencil, Trash2, FileText, Copy } from 'lucide-react';
 import ImageUploader from '@/components/contracts/ImageUploader';
 
-const DEFAULT_TEMPLATE = `CONTRAT DE LOCATION SAISONNIÈRE
+// Template HTML conforme au modèle de contrat signé (PDF de référence).
+// Les coordonnées bailleur et les clauses sont fixes ; seules les variables
+// {{...}} sont substituées par ContractGenerator avant l'impression PDF.
+const DEFAULT_TEMPLATE = `<html>
+<head>
+<meta charset="utf-8"/>
+<style>
+  body{font-family:Arial,sans-serif;font-size:11pt;line-height:1.45;color:#000;margin:0;padding:0}
+  .page{width:794px;padding:48px 60px;box-sizing:border-box;background:#fff}
+  h1{font-size:14pt;text-align:center;text-transform:uppercase;letter-spacing:.05em;margin:0 0 18px}
+  h2{font-size:11pt;text-transform:uppercase;margin:14px 0 4px;border-bottom:1px solid #000;padding-bottom:2px}
+  p{margin:3px 0}
+  .indent{margin-left:20px}
+  .row{display:flex;justify-content:space-between;padding:1px 0}
+  .total-row{font-weight:bold;border-top:1px solid #000;margin-top:4px;padding-top:4px}
+  .rib{background:#f5f5f5;border:1px solid #ccc;padding:9px 14px;margin-top:8px;font-size:10pt}
+  .sig-block{display:flex;justify-content:space-between;align-items:flex-start;margin-top:28px}
+  .sig-col{text-align:center;width:46%}
+  .sig-col img{max-width:220px;margin-top:4px}
+  .sig-line{border-top:1px solid #000;width:80%;margin:60px auto 0}
+</style>
+</head>
+<body>
+<div class="page">
 
-Entre les soussignés :
+<h1>CONTRAT DE LOCATION SAISONNIÈRE</h1>
 
-Le propriétaire du bien {{PROPERTY_NAME}} situé au {{PROPERTY_ADDRESS}}
+<p>Entre les soussignés :</p>
 
-Et
+<h2>Le Bailleur</h2>
+<p class="indent"><strong>Mme PINAULT Géraldine et Mr PAGE Thierry</strong></p>
+<p class="indent">156 rue Oberkampf, 75011 PARIS</p>
+<p class="indent">Ci-après dénommé « le Bailleur ».</p>
 
-{{GUEST_FIRST_NAME}} {{GUEST_LAST_NAME}}
-{{GUEST_ADDRESS}}
-Email : {{GUEST_EMAIL}}
-Téléphone : {{GUEST_PHONE}}
+<h2>Le Preneur</h2>
+<p class="indent"><strong>{{GUEST_FIRST_NAME}} {{GUEST_LAST_NAME}}</strong></p>
+<p class="indent">{{GUEST_ADDRESS}}</p>
+<p class="indent">Email : {{GUEST_EMAIL}}</p>
+<p class="indent">Téléphone : {{GUEST_PHONE}}</p>
+<p class="indent">Ci-après dénommé « le Preneur ».</p>
 
-Il a été convenu ce qui suit :
+<p style="margin-top:10px">Il a été convenu ce qui suit :</p>
 
-ARTICLE 1 - OBJET DU CONTRAT
-Le propriétaire loue au locataire qui accepte, le logement meublé suivant :
-{{PROPERTY_NAME}}
-Capacité d'accueil : {{PROPERTY_CAPACITY}} personnes
-Nombre de chambres : {{PROPERTY_BEDROOMS}}
+<h2>1. Objet du contrat</h2>
+<p>Le Bailleur loue au Preneur, à titre de location saisonnière, la maison située au <strong>{{PROPERTY_ADDRESS}}</strong>.</p>
+<p style="margin-top:6px"><strong>Description du bien :</strong></p>
+<p><em>Maison principale</em></p>
+<p class="indent">1 Salon · 1 Salle à manger · 1 Cuisine équipée · 3 Chambres · 2 Salles d'eau · Jardin privatif</p>
+<p><em>Annexe</em></p>
+<p class="indent">1 Petit salon · 2 Chambres · 1 Salle d'eau</p>
+<p style="margin-top:4px">Capacité d'accueil : {{PROPERTY_CAPACITY}} personnes — Nombre de voyageurs : <strong>{{NUM_GUESTS}}</strong></p>
 
-ARTICLE 2 - DURÉE DE LA LOCATION
-Du {{CHECK_IN}} au {{CHECK_OUT}}
-Soit {{NUM_NIGHTS}} nuit(s)
+<h2>2. Durée de la location</h2>
+<p>La présente location est consentie pour une durée de <strong>{{NUM_NIGHTS}} nuits</strong>, à compter du <strong>{{CHECK_IN}} à 14h00</strong> jusqu'au <strong>{{CHECK_OUT}} à 11h00</strong>.</p>
 
-Nombre de personnes prévues : {{NUM_GUESTS}}
+<h2>3. Montant du loyer et des charges</h2>
+<div class="row"><span>Loyer ({{NUM_NIGHTS}} nuits × {{PRICE_PER_NIGHT}} €)</span><span>{{SUBTOTAL_NIGHTS}} €</span></div>
+<div class="row"><span>Forfait ménage obligatoire</span><span>{{CLEANING_FEE}} €</span></div>
+<div class="row"><span>Taxe de séjour</span><span>{{TOURIST_TAX}} €</span></div>
+<div class="row"><span>Options</span><span>{{OPTIONS_TOTAL}} €</span></div>
+<div class="row total-row"><span>Montant total à payer</span><span>{{TOTAL_AMOUNT}} €</span></div>
+<p style="margin-top:6px">Arrhes à verser lors de la signature du présent contrat (30 %) : <strong>{{ARRHES_AMOUNT}} €</strong>.</p>
 
-ARTICLE 3 - PRIX DE LA LOCATION
-Location : {{SUBTOTAL_NIGHTS}} €
-Frais de ménage : {{CLEANING_FEE}} €
-Taxe de séjour : {{TOURIST_TAX}} €
-Options : {{OPTIONS_TOTAL}} €
+<h2>4. Conditions de paiement</h2>
+<p>Le montant total devra être versé au plus tard 15 jours avant le début de la location par virement bancaire ou tout autre moyen convenu entre les parties.</p>
+<p style="margin-top:4px"><strong>Solde à régler : {{TOTAL_AMOUNT}} – {{ARRHES_AMOUNT}} = {{SOLDE_AMOUNT}} €</strong></p>
 
-TOTAL : {{TOTAL_AMOUNT}} €
+<h2>5. Dépôt de garantie</h2>
+<p>Un chèque de dépôt de garantie de <strong>{{DEPOSIT_AMOUNT}} €</strong> sera exigé lors de la remise des clefs et restitué au Preneur dans un délai maximum de 7 jours après la fin de la location, sous réserve d'état des lieux conforme.</p>
 
-ARTICLE 4 - DÉPÔT DE GARANTIE
-Un dépôt de garantie de {{DEPOSIT_AMOUNT}} € sera versé à l'arrivée.
-Il sera restitué en fin de séjour, déduction faite des éventuelles dégradations.
+<h2>6. État des lieux</h2>
+<p>Un état des lieux d'entrée et de sortie sera réalisé entre les parties par la Conciergerie Laura Gragan. Cet état des lieux conditionne la restitution du dépôt de garantie.</p>
 
-ARTICLE 5 - CONDITIONS DE PAIEMENT
-- Acompte de 30% à la réservation
-- Solde à verser à l'arrivée
+<h2>7. Obligations du Preneur</h2>
+<p class="indent">– à occuper les lieux paisiblement et à respecter le voisinage ;</p>
+<p class="indent">– à restituer les lieux dans l'état initial (hors forfait ménage) ;</p>
+<p class="indent">– à ne pas sous-louer le bien ;</p>
+<p class="indent">– à signaler toute dégradation ou dysfonctionnement.</p>
 
-Fait à ________________, le {{TODAY_DATE}}
+<h2>8. Annulation</h2>
+<p>En cas d'annulation par le Preneur moins de 15 jours avant le début de la location, le loyer restera acquis au Bailleur. Le forfait ménage et le dépôt de garantie seront remboursés.</p>
 
-Signature du propriétaire :          Signature du locataire :
-`;
+<h2>9. Assurance</h2>
+<p>Le Preneur déclare être couvert par une assurance responsabilité civile pour toute la durée de la location.</p>
+
+<h2>10. Signatures</h2>
+<p>En signant le présent contrat, les parties reconnaissent avoir pris connaissance et accepté l'ensemble des clauses.</p>
+
+<h2>11. RIB</h2>
+<div class="rib">
+  <p><strong>M PAGE THIERRY OU MLE PINAULT GERALDINE</strong></p>
+  <p>BICS GENERAL LECLERC (00061) — IBAN : FR76 1020 7000 6104 1610 7865 801</p>
+  <p>RIB : 10207 00061 04161078658 01 — BIC : CCBP FRPP MTG</p>
+</div>
+
+<p style="margin-top:16px">Fait à Paris, le {{TODAY_DATE}}</p>
+
+<div class="sig-block">
+  <div class="sig-col">
+    <p><strong>Le Bailleur :</strong></p>
+    <p style="font-size:9pt;font-style:italic;color:#555">Lu et approuvé</p>
+    <img src="/signatures-bailleur.png" alt="Signatures bailleur" width="220" />
+  </div>
+  <div class="sig-col">
+    <p><strong>Le Preneur :</strong></p>
+    <p style="font-size:9pt;font-style:italic;color:#555">Lu et approuvé</p>
+    <div class="sig-line"></div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>`;
 
 export default function ContractTemplates() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
